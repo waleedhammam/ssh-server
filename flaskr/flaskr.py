@@ -65,7 +65,7 @@ def add_entry():
                 [request.form['title'], request.form['text']])
     db.commit()
     flash('New entry success!')
-    return redirect(url_for('show_entries'))
+    return redirect(url_for('show_entries.html'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -78,7 +78,7 @@ def login():
         else:
             session['logged_in'] = True
             flash('You were logged in')
-            return redirect(url_for('show_entries'))
+        return redirect(url_for('show_entries.html'))
     return render_template('login.html', error=error)
 
 @app.route('/logout')
