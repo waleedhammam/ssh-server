@@ -1,8 +1,8 @@
 #imports
 import os
 import sqlite3
-from flask import Flask, request, session, g, redirect, \
-                render_template, flash
+from flask import Flask, request, session, g, redirect, render_template, flash,\
+url_for
 
 
 # create the app
@@ -65,21 +65,21 @@ def add_entry():
                 [request.form['title'], request.form['text']])
     db.commit()
     flash('New entry success!')
-    return redirect(url_for('show_entries.html'))
+    return redirect(url_for('show_entries'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
     if request.method == 'POST':
         if request.form['username'] != app.config['USERNAME']:
-            error = 'Invalid username'
+            error = 'invalid username'
         elif request.form['password'] != app.config['PASSWORD']:
-            error = 'Invalid password'
+            error = 'invalid password'
         else:
             session['logged_in'] = True
-            flash('You were logged in')
-        return redirect(url_for('show_entries.html'))
-    return render_template('login.html', error=error)
+            flash('Logged In !')
+            return redirect(url_for('show_entries'))
+    return render_template('login.html', error = error)
 
 @app.route('/logout')
 def logout():
