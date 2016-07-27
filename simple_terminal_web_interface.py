@@ -18,9 +18,6 @@ def test_message(message):
     (output, err) = p.communicate()
     emit('my response', {'data': output})
 
-@socketio.on('my broadcast event', namespace='/test')
-def test_message(message):
-    emit('my response', {'data': message['data']}, broadcast=True)
 
 @socketio.on('connect', namespace='/test')
 def test_connect():
