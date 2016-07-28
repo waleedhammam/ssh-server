@@ -13,7 +13,7 @@ socketio = SocketIO(app)
 # main app root
 @app.route('/')
 def index():
-    socketio.emit('my response', namespace='/BaseNamespace')
+    socketio.emit('my response')
     return render_template('index.html', async_mode=socketio.async_mode)
 
 # sending commands to a shell
@@ -24,8 +24,7 @@ def test_message(message):
                             stdin=subprocess.PIPE)
     out,err = p.communicate()
     print out + " " + err
-    emit('my response',
-         {'data': out, 'count': 0})
+    emit('my response', [out, err])
 
 # app start
 if __name__ == '__main__':
