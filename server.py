@@ -10,10 +10,6 @@ app.config['SECRET_KEY'] = 'secret!'
 
 socketio = SocketIO(app)
 
-@socketio.on('message', namespace='/BaseNamespace')
-def handle_message(message):
-    print('received message: ' + message)
-
 # main app root
 @app.route('/')
 def index():
@@ -21,13 +17,12 @@ def index():
     return render_template('index.html', async_mode=socketio.async_mode)
 
 # sending commands to a shell
-@socketio.on('my event', namespace='/BaseNamespace')
+@socketio.on('my event')
 def test_message(message):
     p = subprocess.Popen(message['data'], stdout = subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             stdin=subprocess.PIPE)
     out,err = p.communicate()
-
     print out + " " + err
     emit('my response',
          {'data': out, 'count': 0})
