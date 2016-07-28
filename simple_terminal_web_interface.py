@@ -1,10 +1,9 @@
 import subprocess
 from flask import Flask, render_template
 from flask.ext.socketio import SocketIO, emit
-import os
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret!'
+#app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 
 @app.route('/')
@@ -12,9 +11,19 @@ def index():
     return render_template('index.html')
 
 
-@socketio.on('my event', namespace='/test')
+
+
+# @socketio.on('my event', namespace='/test')
+# def test_message(message):
+#     msg = message['data']
+#     p = subprocess.Popen(msg, stdout=subprocess.PIPE, shell=True)
+#     (output, err) = p.communicate()
+#     emit('my response', {'data': output})
+
+@socketio.on('my event')
 def test_message(message):
-    p = subprocess.Popen(message["data"], stdout=subprocess.PIPE, shell=True)
+    msg = message['data']
+    p = subprocess.Popen(msg, stdout=subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
     emit('my response', {'data': output})
 
@@ -22,10 +31,12 @@ def test_message(message):
 @socketio.on('connect', namespace='/test')
 def test_connect():
     emit('my response', {'data': 'Connected'})
+    print('connected ! :D')
 
 @socketio.on('disconnect', namespace='/test')
 def test_disconnect():
     print('Client disconnected')
 
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(app, debug=True)
+    #import pudb; pu.db

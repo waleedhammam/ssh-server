@@ -15,7 +15,7 @@
             // Connect to the Socket.IO server.
             // The connection URL has the following format:
             //     http[s]://<domain>:<port>[/<namespace>]
-            var socket = io.connect('http://' + document.domain + ':' + location.port + namespace);
+            var socket = io.connect('http://' + document.domain + ':' + location.port );
             // Event handler for new connections.
             // The callback function is invoked when a connection with the
             // server is established.
@@ -65,9 +65,6 @@
     </script>
 </head>
 <body>
-    <!-- <h1>Flask-SocketIO Test</h1>
-    <p>Async mode is: <b>{{ async_mode }}</b></p>
-    <p>Average ping/pong latency: <b><span id="ping-pong"></span>ms</b></p> -->
     <h2>Terminal:</h2>
         <div id="log"></div>
     <form id="emit" method="POST" action='#'>
@@ -76,18 +73,6 @@
         <input type="text" name="emit_data" id="emit_data" placeholder="Message">
         <!-- <input type="submit" value="RUN it :D"> -->
     </form>
-    <!-- <form id="broadcast" method="POST" action='#'>
-        <input type="text" name="broadcast_data" id="broadcast_data" placeholder="Message">
-        <input type="submit" value="Broadcast">
-    </form>
-
-    <form id="close" method="POST" action="#">
-        <input type="text" name="close_room" id="close_room" placeholder="Room Name">
-        <input type="submit" value="Close Room">
-    </form>
-    <form id="disconnect" method="POST" action="#">
-        <input type="submit" value="Disconnect">
-    </form> -->
 
 
 </body>
